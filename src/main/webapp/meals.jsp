@@ -10,20 +10,30 @@
 <%@ taglib uri="http://mycompany.com" prefix="f" %>
 <html>
 <head>
-    <title>Meals</title>
+    <title>Calories Management</title>
     <link rel="stylesheet" type="text/css" href="css/mystyle.css">
 </head>
 <body>
-<h3><a href="index.html">Home</a></h3>
-<h2>Meals</h2>
+<div align="center">
+    <h1>Meals</h1>
+    <h2>
+        <a href="index.html">Home</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="meal">Add New Meal</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="meals">List All Meal</a>
+    </h2>
+</div>
 <table width="80%" align="center">
     <tr>
         <th>Description</th>
         <th>Date</th>
         <th>Calories</th>
+        <th colspan="2">Actions</th>
     </tr>
     <c:forEach items="${mealWithExceeds}" var="meal">
         <tr class="${meal.exceed ? 'red' : 'green'}">
+            <td style="display: none"><c:out value="${meal.id}"/></td>
             <td>
                 <c:out value="${meal.description}"/>
             </td>
@@ -33,6 +43,8 @@
             <td>
                 <c:out value="${meal.calories}"/>
             </td>
+            <td><a href="get?id=<c:out value="${meal.id}"/>"/>Update</td>
+            <td><a href="delete?id=<c:out value='${meal.id}'/>"/>Delete</td>
         </tr>
     </c:forEach>
 </table>
