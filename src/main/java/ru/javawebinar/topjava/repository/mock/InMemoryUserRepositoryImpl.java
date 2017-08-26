@@ -38,7 +38,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User get(int id) {
         log.info("get {}", id);
-        return repository.get(id);
+        return repository.getOrDefault(repository.get(id), null);
     }
 
     @Override
@@ -51,6 +51,6 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return repository.values().stream().filter(u->u.getEmail().equals(email)).findFirst().get();
+        return repository.values().stream().filter(u->u.getEmail().equals(email)).findFirst().orElse(null);
     }
 }
