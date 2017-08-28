@@ -8,6 +8,8 @@ import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
+import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -17,9 +19,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
@@ -62,7 +69,7 @@ public class MealServlet extends HttpServlet {
 
         switch (action == null ? "all" : action) {
             case "filter":
-                response.sendRedirect("index.html");
+                filter(request, response);
                 break;
             case "delete":
                 int id = getId(request);
@@ -90,6 +97,24 @@ public class MealServlet extends HttpServlet {
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.valueOf(paramId);
+    }
+
+    private void filter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.info("getAll filtered");
+        request.setAttribute("meals", mealRestController.getAll().stream().
+                filter(m -> DateTimeUtil.isBetweenDate(m.getDateTime().toLocalDate(),
+                        request.getParameter("startDate").isEmpty() ?
+                                LocalDate.MIN : LocalDate.parse(request.getParameter("startDate"), DateTimeFormatter.ISO_LOCAL_DATE),
+                        request.getParameter("endDate").isEmpty() ?
+                                LocalDate.MAX : LocalDate.parse(request.getParameter("endDate"), DateTimeFormatter.ISO_LOCAL_DATE))).
+                filter(m -> DateTimeUtil.isBetween(m.getDateTime().toLocalTime(),
+                        request.getParameter("startTime").isEmpty() ?
+                                LocalTime.MIN : LocalTime.parse(request.getParameter("startTime"), DateTimeFormatter.ISO_LOCAL_TIME),
+                        request.getParameter("endTime").isEmpty() ?
+                                LocalTime.MAX : LocalTime.parse(request.getParameter("endTime"), DateTimeFormatter.ISO_LOCAL_TIME))).
+                collect(Collectors.toList()));
+
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 
     @Override

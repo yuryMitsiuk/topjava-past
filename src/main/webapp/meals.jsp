@@ -19,22 +19,25 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <form action="meals" method="get">
-    <div title="Filter">
-        <h3>Filter by dataTime</h3>
-        <div>
+    <div align="center">
+        <h3>Filter by dateTime</h3>
+        <div >
             <label>From date: </label>
-            <input type="date" name="startDate"/>
+            <input type="date" name="startDate" value="this.value"/>
             <label>From time: </label>
-            <input type="time"  name="startTime"/>
+            <input type="time"  name="startTime" value="this.value"/>
         </div>
         <div>
             <label>To date: </label>
-            <input type="date" name="endDate"/>
+            <input type="date" name="endDate" value="this.value"/>
             <label>To time: </label>
-            <input type="time" name="endTime"/>
+            <input type="time" name="endTime" value="this.value"/>
         </div>
+        <br>
     </div>
-        <button type="submit" name="action" value="filter">Filter</button>
+        <div align="center">
+            <button type="submit" name="action" value="filter">Filter</button>
+        </div>
     </form>
     <h2>Meal list</h2>
     <a href="meals?action=create">Add Meal</a>
