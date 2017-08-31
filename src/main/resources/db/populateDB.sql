@@ -11,3 +11,10 @@ VALUES ('Admin', 'admin@gmail.com', 'admin');
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001);
+
+INSERT INTO meals (user_id, date_time, description, calories) VALUES (100000, '2017-08-30 09:00:00', 'Завтрак', 550);
+INSERT INTO meals (user_id, date_time, description, calories) VALUES (100000, '2017-08-30 14:00:00', 'Обед', 1000);
+INSERT INTO meals (user_id, date_time, description, calories) VALUES (100000, '2017-08-30 19:00:00', 'Ужин', 250);
+INSERT INTO meals (user_id, date_time, description, calories) VALUES (100001, '2017-08-31 09:00:00', 'Админ завтрак', 250);
+INSERT INTO meals (user_id, date_time, description, calories) VALUES (100001, '2017-08-31 14:00:00', 'Админ обед', 1150);
+INSERT INTO meals (user_id, date_time, description, calories) VALUES (100001, '2017-08-31 19:00:00', 'Админ ужин', 750);
