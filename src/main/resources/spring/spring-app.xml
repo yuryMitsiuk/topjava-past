@@ -20,4 +20,12 @@
 
     <context:component-scan base-package="ru.javawebinar.**.web"/>
 
+    <!--<beans profile="inMemory">-->
+        <!--<context:component-scan base-package="ru.javawebinar.**.repository.mock"/>-->
+    <!--</beans>-->
+
+    <!--<beans profile="jdbc">-->
+        <!--<context:component-scan base-package="ru.javawebinar.**.repository.jdbc"/>-->
+    <!--</beans>-->
+
 </beans>
