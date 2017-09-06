@@ -92,4 +92,9 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 meals.values().stream()
                         .sorted(Comparator.comparing(Meal::getDateTime).reversed());
     }
+
+    @Override
+    public Meal getMealWithUser(int id) {
+        throw new UnsupportedOperationException();
+    }
 }
