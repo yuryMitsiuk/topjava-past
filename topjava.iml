@@ -8,6 +8,7 @@
           <file>file://$MODULE_DIR$/src/main/resources/spring/spring-db.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/spring/spring-tools.xml</file>
         </fileset>
+        <fileset id="web application context" profiles="datajpa,postgres" autodetected="true" />
       </configuration>
     </facet>
     <facet type="web" name="Web">
