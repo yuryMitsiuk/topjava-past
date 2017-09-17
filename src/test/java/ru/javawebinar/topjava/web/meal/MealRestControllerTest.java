@@ -9,7 +9,9 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 
@@ -79,6 +81,44 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER_EXCEED.contentListMatcher(Arrays.asList(MealsUtil.createWithExceed(MEAL5, true),
+                        MealsUtil.createWithExceed(MEAL4, true))));
+    }
+
+    @Test
+    public void testGetBetweenDateOrTime() throws Exception {
+        mockMvc.perform(get(REST_URL+"dateTimeFilter?startDate="+ LocalDate.of(2015, Month.MAY, 31)+
+                "&startTime="+ LocalTime.of(9, 0)+
+                "&endDate="+ LocalDate.of(2015, Month.MAY, 31)+
+                "&endTime="+LocalTime.of(15, 0)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER_EXCEED.contentListMatcher(Arrays.asList(MealsUtil.createWithExceed(MEAL5, true),
+                        MealsUtil.createWithExceed(MEAL4, true))));
+    }
+
+    @Test
+    public void testGetBetweenTime() throws Exception {
+        mockMvc.perform(get(REST_URL+"dateTimeFilter?startDate="+
+                "&startTime="+ LocalTime.of(9, 0)+
+                "&endDate="+
+                "&endTime="+LocalTime.of(11, 0)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER_EXCEED.contentListMatcher(Arrays.asList(MealsUtil.createWithExceed(MEAL4, true),
+                        MealsUtil.createWithExceed(MEAL1, false))));
+    }
+
+    @Test
+    public void testGetBetweenDate() throws Exception {
+        mockMvc.perform(get(REST_URL+"dateTimeFilter?startDate="+ LocalDate.of(2015, Month.MAY, 31)+
+                "&startTime="+
+                "&endDate="+ LocalDate.of(2015, Month.MAY, 31)+
+                "&endTime="))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER_EXCEED.contentListMatcher(Arrays.asList(
+                        MealsUtil.createWithExceed(MEAL6, true),
+                        MealsUtil.createWithExceed(MEAL5, true),
                         MealsUtil.createWithExceed(MEAL4, true))));
     }
 }
