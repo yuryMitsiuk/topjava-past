@@ -12,10 +12,18 @@
         <jstl.version>1.2</jstl.version>
         <slf4j.version>1.7.25</slf4j.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
-        <hibernate-validator.version>6.0.1.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.0.2.Final</hibernate-validator.version>
         <spring-data-jpa.version>1.11.6.RELEASE</spring-data-jpa.version>
+        <spring-security.version>4.2.3.RELEASE</spring-security.version>
         <jackson-json.version>2.9.0</jackson-json.version>
         <ehcache.version>2.10.4</ehcache.version>
+
+        <!--webjars-->
+        <webjars-bootstrap.version>3.3.7-1</webjars-bootstrap.version>
+        <webjars-jquery.version>3.2.1</webjars-jquery.version>
+        <webjars-datetimepicker.version>2.5.4</webjars-datetimepicker.version>
+        <webjars-noty.version>3.1.0</webjars-noty.version>
+        <webjars-datatables.version>1.10.15</webjars-datatables.version>
     </properties>
 
     <groupId>ru.javawebinar.topjava</groupId>
@@ -179,6 +187,18 @@
             <version>${spring-data-jpa.version}</version>
         </dependency>
 
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
         <!-- Cache -->
         <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
         <dependency>
@@ -213,6 +233,51 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!-- Webjars (static dependencies distributed as JAR files) -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${webjars-jquery.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${webjars-bootstrap.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables</artifactId>
+            <version>${webjars-datatables.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datetimepicker</artifactId>
+            <version>${webjars-datetimepicker.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>noty</artifactId>
+            <version>${webjars-noty.version}</version>
+        </dependency>
+
         <!--JSON-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -229,6 +294,14 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-json.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.skyscreamer/jsonassert -->
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>1.5.0</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- Tests -->
         <!-- https://mvnrepository.com/artifact/junit/junit -->
