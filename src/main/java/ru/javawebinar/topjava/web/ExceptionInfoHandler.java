@@ -6,6 +6,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
@@ -24,6 +26,22 @@ public class ExceptionInfoHandler {
     @ResponseBody
     public ErrorInfo handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e, false);
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public ErrorInfo bindError(HttpServletRequest req, BindException e) {
+        String[] details = e.getBindingResult().getFieldErrors().stream().map(fieldError -> fieldError.getField()+" "+fieldError.getDefaultMessage()).toArray(String[]::new);
+        return new ErrorInfo(req.getRequestURL(), "BindError", details);
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ErrorInfo bindError(HttpServletRequest req, MethodArgumentNotValidException e) {
+        String[] details = e.getBindingResult().getFieldErrors().stream().map(fieldError -> fieldError.getField()+" "+fieldError.getDefaultMessage()).toArray(String[]::new);
+        return new ErrorInfo(req.getRequestURL(), "ArgumentNotValid", details);
     }
 
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
